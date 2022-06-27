@@ -8,6 +8,8 @@
 #include <SDL2/SDL_video.h>
 #include <string>
 
+Game *Game::instance = nullptr;
+
 Game::Game(std::string &title, int width, int height) {
   // somente uma instância pode estar rodando
   if (instance != nullptr) {
@@ -44,23 +46,23 @@ Game::~Game() {
   SDL_Quit();
 }
 
-State &Game::GetState() {
-  return *state;
-}
+State &Game::GetState() { return *state; }
 
-SDL_Renderer* Game::GetRenderer() {
-  return renderer;
-}
+SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
-  // TODO
+  while (!state->QuitRequested()) {
+    SDL_RenderPresent(renderer);
+
+    SDL_Delay(33);
+  };
 }
 
 Game &Game::GetInstance() {
-  if (this->instance != nullptr) {
-    return *instance;
-  } else {
-    instance = new Game("game", 320, 200);
-    return *instance;
+  if (instance == nullptr) {
+    std::string title = std::string("Brenno - 190127465");
+    instance = new Game(title, 1024, 600);
   }
+
+  return *instance;
 }

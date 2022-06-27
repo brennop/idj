@@ -1,0 +1,97 @@
+[
+  {
+    "arguments": [
+      "/bin/g++",
+      "-Iinclude",
+      "-c",
+      "-std=c++11",
+      "-Wall",
+      "-pedantic",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-Werror=init-self",
+      "-o",
+      "bin/Game.o",
+      "src/Game.cpp"
+    ],
+    "directory": "/home/pst/unb/idj/trabalhos/trabalho_1",
+    "file": "/home/pst/unb/idj/trabalhos/trabalho_1/src/Game.cpp",
+    "output": "/home/pst/unb/idj/trabalhos/trabalho_1/bin/Game.o"
+  },
+  {
+    "arguments": [
+      "/bin/g++",
+      "-Iinclude",
+      "-c",
+      "-std=c++11",
+      "-Wall",
+      "-pedantic",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-Werror=init-self",
+      "-o",
+      "bin/Music.o",
+      "src/Music.cpp"
+    ],
+    "directory": "/home/pst/unb/idj/trabalhos/trabalho_1",
+    "file": "/home/pst/unb/idj/trabalhos/trabalho_1/src/Music.cpp",
+    "output": "/home/pst/unb/idj/trabalhos/trabalho_1/bin/Music.o"
+  },
+  {
+    "arguments": [
+      "/bin/g++",
+      "-Iinclude",
+      "-c",
+      "-std=c++11",
+      "-Wall",
+      "-pedantic",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-Werror=init-self",
+      "-o",
+      "bin/Sprite.o",
+      "src/Sprite.cpp"
+    ],
+    "directory": "/home/pst/unb/idj/trabalhos/trabalho_1",
+    "file": "/home/pst/unb/idj/trabalhos/trabalho_1/src/Sprite.cpp",
+    "output": "/home/pst/unb/idj/trabalhos/trabalho_1/bin/Sprite.o"
+  },
+  {
+    "arguments": [
+      "/bin/g++",
+      "-Iinclude",
+      "-c",
+      "-std=c++11",
+      "-Wall",
+      "-pedantic",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-Werror=init-self",
+      "-o",
+      "bin/State.o",
+      "src/State.cpp"
+    ],
+    "directory": "/home/pst/unb/idj/trabalhos/trabalho_1",
+    "file": "/home/pst/unb/idj/trabalhos/trabalho_1/src/State.cpp",
+    "output": "/home/pst/unb/idj/trabalhos/trabalho_1/bin/State.o"
+  },
+  {
+    "arguments": [
+      "/bin/g++",
+      "-Iinclude",
+      "-c",
+      "-std=c++11",
+      "-Wall",
+      "-pedantic",
+      "-Wextra",
+      "-Wno-unused-parameter",
+      "-Werror=init-self",
+      "-o",
+      "bin/main.o",
+      "src/main.cpp"
+    ],
+    "directory": "/home/pst/unb/idj/trabalhos/trabalho_1",
+    "file": "/home/pst/unb/idj/trabalhos/trabalho_1/src/main.cpp",
+    "output": "/home/pst/unb/idj/trabalhos/trabalho_1/bin/main.o"
+  }
+]
