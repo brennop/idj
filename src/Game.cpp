@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "common.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -6,6 +7,7 @@
 
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_video.h>
+#include <cstdio>
 #include <string>
 
 Game *Game::instance = nullptr;
@@ -28,10 +30,15 @@ Game::Game(std::string &title, int width, int height) {
   Mix_AllocateChannels(8);
 
   SDL_Window *window = SDL_CreateWindow(title.c_str(), 0, 0, width, height, 0);
-  SDL_CreateRenderer(window, -1,
-                     SDL_RENDERER_SOFTWARE | SDL_RENDERER_ACCELERATED |
-                         SDL_RENDERER_PRESENTVSYNC |
-                         SDL_RENDERER_TARGETTEXTURE);
+
+  CHECK_ERROR(window);
+
+  renderer = SDL_CreateRenderer(
+      window, -1,
+      SDL_RENDERER_SOFTWARE | SDL_RENDERER_ACCELERATED |
+          SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+
+  CHECK_ERROR(renderer);
 
   state = new State();
 }
@@ -52,9 +59,13 @@ SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
   while (!state->QuitRequested()) {
+    state->Update(100);
+
+    state->Render();
+
     SDL_RenderPresent(renderer);
 
-    SDL_Delay(33);
+    SDL_Delay(100);
   };
 }
 
