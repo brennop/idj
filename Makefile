@@ -54,7 +54,7 @@ endif
 endif
 
 .PRECIOUS: $(DEP_FILES)
-.PHONY: release debug clean folders help
+.PHONY: release debug clean folders help run
 
 all: $(EXEC)
 
@@ -77,6 +77,9 @@ release: $(EXEC)
 
 debug: FLAGS += $(DFLAGS)
 debug: $(EXEC)
+
+run: $(EXEC)
+	./JOGO
 
 folders:
 ifeq ($(OS), Windows_NT)

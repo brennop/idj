@@ -1,11 +1,15 @@
 #include "Music.h"
+#include "common.h"
 
 #include <SDL2/SDL_mixer.h>
 #include <string>
 
 Music::Music() { music = nullptr; }
 
-Music::Music(std::string file) { Open(file); }
+Music::Music(std::string file) { 
+  music = nullptr;
+  Open(file); 
+}
 
 void Music::Play(int times) {
   if (IsOpen()) {
@@ -26,9 +30,7 @@ void Music::Open(std::string file) {
 
   music = Mix_LoadMUS(file.c_str());
 
-  if (!IsOpen()) {
-    exit(1); // TODO: handle errors
-  }
+  CHECK_ERROR(music);
 }
 
 bool Music::IsOpen() {

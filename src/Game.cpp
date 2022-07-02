@@ -6,8 +6,8 @@
 #include <SDL2/SDL_mixer.h>
 
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_video.h>
-#include <cstdio>
 #include <string>
 
 Game *Game::instance = nullptr;
@@ -18,8 +18,11 @@ Game::Game(std::string &title, int width, int height) {
     std::exit(1);
   }
 
+  instance = this;
+
   // TODO: verificar error do init
-  SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+  int init = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER);
+  CHECK_ERROR_INT(init);
 
   IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 
@@ -29,14 +32,16 @@ Game::Game(std::string &title, int width, int height) {
 
   Mix_AllocateChannels(8);
 
+
   SDL_Window *window = SDL_CreateWindow(title.c_str(), 0, 0, width, height, 0);
 
   CHECK_ERROR(window);
 
   renderer = SDL_CreateRenderer(
-      window, -1,
-      SDL_RENDERER_SOFTWARE | SDL_RENDERER_ACCELERATED |
-          SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+      window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_TARGETTEXTURE
+      // | SDL_RENDERER_ACCELERATED
+      // | SDL_RENDERER_PRESENTVSYNC
+  );
 
   CHECK_ERROR(renderer);
 
@@ -59,13 +64,13 @@ SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
   while (!state->QuitRequested()) {
-    state->Update(100);
+    state->Update(33);
 
     state->Render();
 
     SDL_RenderPresent(renderer);
 
-    SDL_Delay(100);
+    SDL_Delay(33);
   };
 }
 

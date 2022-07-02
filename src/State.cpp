@@ -7,12 +7,16 @@
 
 State::State() {
   quitRequested = false;
-  bg = *new Sprite("assets/img/ocean.jpg");
-  music = *new Music("assets/audio/stateState.ogg");
+  bg = *new Sprite();
+  music = *new Music();
+
+  LoadAssets();
 }
 
 void State::LoadAssets() {
-  // TODO
+  bg.Open("assets/img/ocean.jpg");
+  music.Open("assets/audio/stageState.ogg");
+  music.Play();
 }
 
 void State::Update(float dt) {

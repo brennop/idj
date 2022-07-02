@@ -1,9 +1,11 @@
 #include "Sprite.h"
 #include "Game.h"
+#include "common.h"
 
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_render.h>
+#include <cstdio>
 #include <string>
 
 Sprite::Sprite() { texture = nullptr; }
@@ -28,10 +30,13 @@ void Sprite::Open(std::string file) {
   auto *renderer = game.GetRenderer();
   texture = IMG_LoadTexture(renderer, file.c_str());
 
-  if (texture == nullptr) {
-    // TODO: handle error
-    exit(1);
-  }
+  CHECK_ERROR(texture);
+
+  int query = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+
+  CHECK_ERROR_INT(query);
+
+  SetClip(0, 0, width, height);
 }
 
 void Sprite::SetClip(int x, int y, int w, int h) {
@@ -51,7 +56,8 @@ void Sprite::Render(int x, int y) {
   dstrect.w = clipRect.w;
   dstrect.h = clipRect.h;
 
-  SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
+  int render = SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
+  CHECK_ERROR_INT(render);
 }
 
 int Sprite::GetWidth() { return width; }
