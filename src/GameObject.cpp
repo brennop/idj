@@ -27,17 +27,16 @@ void GameObject::AddComponent(Component *component) {
 }
 
 void GameObject::RemoveComponent(Component *component) {
-  components.erase(std::remove(components.begin(), components.end(), component),
-                   components.end());
+  std::remove_if(
+      components.begin(), components.end(),
+      [=](std::unique_ptr<Component> &c) { return c.get() == component; });
 }
 
 Component *GameObject::GetComponent(std::string type) {
-  auto result =
-      find_if(components.begin(), components.end(),
-              [type](Component *component) { return component->Is(type); });
-
-  if (result != components.end()) {
-    return result->get();
+  for (auto &component : components) {
+    if (component->Is(type)) {
+      return component.get();
+    }
   }
   return nullptr;
 }

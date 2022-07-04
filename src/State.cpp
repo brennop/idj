@@ -15,8 +15,8 @@ State::State() {
 
   GameObject *go = new GameObject();
 
-  bg = *new Sprite(*go);
-  go->AddComponent(&bg);
+  Sprite *bg = new Sprite(*go);
+  go->AddComponent(bg);
 
   gameObjects.emplace_back(go);
 
@@ -26,7 +26,10 @@ State::State() {
 }
 
 void State::LoadAssets() {
-  bg.Open("assets/img/ocean.jpg");
+  GameObject *go = static_cast<GameObject *>(gameObjects[0].get());
+  Sprite *bg = static_cast<Sprite *>(go->GetComponent("Sprite"));
+  bg->Open("assets/background.png");
+
   music.Open("assets/audio/stageState.ogg");
   music.Play();
 }
@@ -112,19 +115,19 @@ void State::Render() {
 }
 
 void State::AddObject(int mouseX, int mouseY) {
-  GameObject enemy = *new GameObject();
+  GameObject *enemy = new GameObject();
 
-  Sprite *peguinface = new Sprite(enemy, "./assets/img/penguinface.png");
-  enemy.AddComponent(peguinface);
+  Sprite *peguinface = new Sprite(*enemy, "./assets/img/penguinface.png");
+  enemy->AddComponent(peguinface);
 
-  enemy.box.x = mouseX;
-  enemy.box.y = mouseY;
+  enemy->box.x = mouseX;
+  enemy->box.y = mouseY;
 
-  Sound *sound = new Sound(enemy, "./assets/audio/boom.wav");
-  enemy.AddComponent(sound);
+  Sound *sound = new Sound(*enemy, "./assets/audio/boom.wav");
+  enemy->AddComponent(sound);
 
-  Face *face = new Face(enemy);
-  enemy.AddComponent(face);
+  Face *face = new Face(*enemy);
+  enemy->AddComponent(face);
 
   gameObjects.emplace_back(enemy);
 }
