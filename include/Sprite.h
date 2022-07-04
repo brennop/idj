@@ -5,19 +5,25 @@
 #define INCLUDE_SDL_MIXER
 #include "SDL_include.h"
 
+#include "Component.h"
+
 #include <string>
 
-class Sprite {
+class Sprite : public Component {
 public:
-  Sprite();
-  Sprite(std::string file);
+  Sprite(GameObject &associated);
+  Sprite(GameObject &associated, std::string file);
   ~Sprite();
 
   void Open(std::string file);
   void SetClip(int x, int y, int w, int h);
-  void Render(int x, int y);
+
   int GetWidth();
   int GetHeight();
+
+  void Render() override;
+  void Update(float dt) override;
+  bool Is(std::string type) override;
 
   /*
    * Retorna true se texture estiver alocada

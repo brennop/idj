@@ -8,9 +8,12 @@
 #include <cstdio>
 #include <string>
 
-Sprite::Sprite() { texture = nullptr; }
+Sprite::Sprite(GameObject &associated) : Component(associated) {
+  texture = nullptr;
+}
 
-Sprite::Sprite(std::string file) {
+Sprite::Sprite(GameObject &associated, std::string file)
+    : Component(associated) {
   texture = nullptr;
   Open(file);
 }
@@ -46,13 +49,13 @@ void Sprite::SetClip(int x, int y, int w, int h) {
   clipRect.h = h;
 }
 
-void Sprite::Render(int x, int y) {
+void Sprite::Render() {
   Game &game = Game::GetInstance();
   auto *renderer = game.GetRenderer();
 
   SDL_Rect dstrect;
-  dstrect.x = x;
-  dstrect.y = y;
+  dstrect.x = associated.box.x;
+  dstrect.y = associated.box.y;
   dstrect.w = clipRect.w;
   dstrect.h = clipRect.h;
 
