@@ -63,6 +63,9 @@ void Sprite::Render() {
   CHECK_ERROR_INT(render);
 }
 
+void Sprite::Update(float dt) {}
+bool Sprite::Is(std::string type) { return type == "Sprite"; }
+
 int Sprite::GetWidth() { return width; }
 
 int Sprite::GetHeight() { return height; }

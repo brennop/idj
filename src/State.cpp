@@ -28,7 +28,7 @@ State::State() {
 void State::LoadAssets() {
   GameObject *go = static_cast<GameObject *>(gameObjects[0].get());
   Sprite *bg = static_cast<Sprite *>(go->GetComponent("Sprite"));
-  bg->Open("assets/background.png");
+  bg->Open("assets/img/ocean.jpg");
 
   music.Open("assets/audio/stageState.ogg");
   music.Play();
