@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "Sound.h"
 #include "Vec2.h"
+#include "TileMap.h"
+#include "TileSet.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -18,9 +20,15 @@ State::State() {
   Sprite *bg = new Sprite(*go);
   go->AddComponent(bg);
 
-  gameObjects.emplace_back(go);
-
   music = *new Music();
+
+  // map
+  TileSet *tileSet = new TileSet(64, 64, "assets/img/tileset.png");
+  TileMap *tileMap = new TileMap(*go, "assets/map/tileMap.txt", tileSet);
+
+  go->AddComponent(tileMap);
+
+  gameObjects.emplace_back(go);
 
   LoadAssets();
 }
@@ -28,9 +36,9 @@ State::State() {
 void State::LoadAssets() {
   GameObject *go = static_cast<GameObject *>(gameObjects[0].get());
   Sprite *bg = static_cast<Sprite *>(go->GetComponent("Sprite"));
-  bg->Open("assets/img/ocean.jpg");
+  bg->Open("./assets/img/ocean.jpg");
 
-  music.Open("assets/audio/stageState.ogg");
+  music.Open("./assets/audio/stageState.ogg");
   music.Play();
 }
 

@@ -29,9 +29,7 @@ void Sprite::Open(std::string file) {
     SDL_DestroyTexture(texture);
   }
 
-  Game &game = Game::GetInstance();
-  auto *renderer = game.GetRenderer();
-  texture = IMG_LoadTexture(renderer, file.c_str());
+  texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
 
   CHECK_ERROR(texture);
 
@@ -49,13 +47,15 @@ void Sprite::SetClip(int x, int y, int w, int h) {
   clipRect.h = h;
 }
 
-void Sprite::Render() {
+void Sprite::Render() { Render(associated.box.x, associated.box.y); }
+
+void Sprite::Render(int x, int y) {
   Game &game = Game::GetInstance();
   auto *renderer = game.GetRenderer();
 
   SDL_Rect dstrect;
-  dstrect.x = associated.box.x;
-  dstrect.y = associated.box.y;
+  dstrect.x = x;
+  dstrect.y = y;
   dstrect.w = clipRect.w;
   dstrect.h = clipRect.h;
 

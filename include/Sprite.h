@@ -22,6 +22,7 @@ public:
   int GetHeight();
 
   void Render() override;
+  void Render(int x, int y);
   void Update(float dt) override;
   bool Is(std::string type) override;
 
