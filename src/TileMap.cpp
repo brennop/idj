@@ -1,9 +1,11 @@
 #include "TileMap.h"
 
 #include <cstdio>
+#include <cstring>
 #include <fstream>
 
 #include "fallback_map.h"
+#define TILEMAP_LOADER
 
 TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet)
     : Component(associated) {
@@ -20,6 +22,8 @@ void TileMap::Load(std::string path) {
 
   std::string line;
 
+  printf("carregando mapa...");
+
   getline(file, line, ',');
   mapWidth = stoi(line);
   getline(file, line, ',');
@@ -29,16 +33,10 @@ void TileMap::Load(std::string path) {
 
   tileMatrix = std::vector<int>(mapWidth * mapHeight * mapDepth);
 
-  for (int k = 0; k < mapDepth; k++) {
-    getline(file, line);
-    for (int i = 0; i < mapWidth; i++) {
-      getline(file, line);
-      for (int j = 0; j < mapHeight; j++) {
-        getline(file, line, ',');
-        int tile = stoi(line) - 1;
-        // TODO: check this logic
-        tileMatrix[k + i * mapWidth + j * mapWidth * mapHeight] = tile;
-      }
+  while (getline(file, line, ',')) {
+    if (strncmp(line.c_str(), "\n", 1) == 0 &&
+        strncmp(line.c_str(), "\r", 1) == 0) {
+      tileMatrix.push_back(stoi(line) - 1);
     }
   }
 #else
@@ -48,8 +46,8 @@ void TileMap::Load(std::string path) {
 
   tileMatrix = std::vector<int>(mapWidth * mapHeight * mapDepth);
 
-  for(int i = 0; i < 1250; i++) {
-        tileMatrix[i] = fallback_map[i];
+  for (int i = 0; i < 1250; i++) {
+    tileMatrix[i] = fallback_map[i];
   }
 #endif
 }
