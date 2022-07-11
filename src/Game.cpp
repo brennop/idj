@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Resources.h"
 #include "common.h"
 
 #include <SDL2/SDL.h>
@@ -72,6 +73,10 @@ void Game::Run() {
 
     SDL_Delay(33);
   };
+
+  Resources::ClearImages();
+  Resources::ClearMusics();
+  Resources::ClearSounds();
 }
 
 Game &Game::GetInstance() {
