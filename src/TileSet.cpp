@@ -1,11 +1,12 @@
 #include "TileSet.h"
+#include <cstdio>
 
 TileSet::TileSet(int tileWidth, int tileHeight, std::string file)
     : tileSet(*new GameObject(), file) {
   this->tileWidth = tileWidth;
   this->tileHeight = tileHeight;
-  rows = tileSet.GetWidth() / tileWidth;
-  columns = tileSet.GetHeight() / tileHeight;
+  columns = tileSet.GetWidth() / tileWidth;
+  rows = tileSet.GetHeight() / tileHeight;
 }
 
 void TileSet::RenderTile(int index, float x, float y) {
@@ -18,8 +19,10 @@ void TileSet::RenderTile(int index, float x, float y) {
   int row = index / columns;
   int column = index % columns;
 
+  tileSet.SetClip(row * tileHeight, column * tileWidth, tileWidth, tileHeight);
+
   // render the tile
-  tileSet.Render(row, column);
+  tileSet.Render(x, y);
 }
 
 int TileSet::GetTileWidth() { return tileWidth; }

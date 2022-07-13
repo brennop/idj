@@ -1,8 +1,9 @@
 #include "TileMap.h"
 
-#include <cstdio>
-#include <cstring>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
 
 #include "fallback_map.h"
 #define TILEMAP_LOADER
@@ -14,16 +15,11 @@ TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet)
 }
 
 void TileMap::Load(std::string path) {
-
-#ifdef TILEMAP_LOADER
   std::ifstream file(path);
 
   // TODO: check error
 
   std::string line;
-
-  printf("carregando mapa...");
-
   getline(file, line, ',');
   mapWidth = stoi(line);
   getline(file, line, ',');
@@ -31,39 +27,32 @@ void TileMap::Load(std::string path) {
   getline(file, line, ',');
   mapDepth = stoi(line);
 
-  tileMatrix = std::vector<int>(mapWidth * mapHeight * mapDepth);
+  while (getline(file, line)) {
+    std::stringstream numbers(line);
+    while (numbers.good()) {
 
-  while (getline(file, line, ',')) {
-    if (strncmp(line.c_str(), "\n", 1) == 0 &&
-        strncmp(line.c_str(), "\r", 1) == 0) {
-      tileMatrix.push_back(stoi(line) - 1);
+      std::string number;
+      getline(numbers, number, ',');
+
+      if (number != "\r" && number != "\n") {
+        tileMatrix.push_back(stoi(number) - 1);
+      }
     }
   }
-#else
-  mapWidth = 25;
-  mapHeight = 25;
-  mapDepth = 2;
-
-  tileMatrix = std::vector<int>(mapWidth * mapHeight * mapDepth);
-
-  for (int i = 0; i < 1250; i++) {
-    tileMatrix[i] = fallback_map[i];
-  }
-#endif
 }
 
 void TileMap::SetTileSet(TileSet *tileSet) { this->tileSet = tileSet; }
 
 int &TileMap::At(int x, int y, int z) {
-  return tileMatrix[z + x * mapWidth + y * mapWidth * mapHeight];
+  return tileMatrix[x + y * mapWidth + z * mapWidth * mapHeight];
 }
 
 void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
   for (int i = 0; i < mapWidth; i++) {
     for (int j = 0; j < mapHeight; j++) {
       int tile = At(i, j, layer);
-      tileSet->RenderTile(tile, i * tileSet->GetTileWidth(),
-                          j * tileSet->GetTileHeight());
+      tileSet->RenderTile(tile, j * tileSet->GetTileHeight(),
+                          i * tileSet->GetTileWidth());
     }
   }
 }
