@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Resources.h"
+#include "InputManager.h"
 #include "common.h"
 
 #include <SDL2/SDL.h>
@@ -65,6 +66,8 @@ SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
   while (!state->QuitRequested()) {
+    InputManager::GetInstance().Update();
+
     state->Update(33);
 
     state->Render();

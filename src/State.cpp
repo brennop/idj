@@ -1,14 +1,16 @@
 #include "State.h"
 #include "Face.h"
 #include "Game.h"
+#include "InputManager.h"
 #include "Sound.h"
-#include "Vec2.h"
 #include "TileMap.h"
 #include "TileSet.h"
+#include "Vec2.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_timer.h>
+#include <cstdio>
 
 #define PI 3.14159265
 
@@ -99,7 +101,15 @@ void State::Input() {
 }
 
 void State::Update(float dt) {
-  Input();
+  InputManager &input = InputManager::GetInstance();
+  if (input.KeyPress(ESCAPE_KEY) || input.QuitRequested())
+    quitRequested = true;
+
+  if (input.KeyPress(SDLK_SPACE)) {
+    Vec2 objPos = Vec2(200, 0).GetRotated(-PI + PI * (rand() % 1001) / 500.0) +
+                  Vec2(input.GetMouseX(), input.GetMouseY());
+    AddObject((int)objPos.x, (int)objPos.y);
+  }
 
   // Update all game objects
   for (auto &gameObject : gameObjects) {
