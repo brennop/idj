@@ -7,6 +7,7 @@
 #include "TileSet.h"
 #include "Vec2.h"
 #include "Camera.h"
+#include "CameraFollower.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -22,6 +23,9 @@ State::State() {
 
   Sprite *bg = new Sprite(*go);
   go->AddComponent(bg);
+
+  CameraFollower *cam = new CameraFollower(*go);
+  go->AddComponent(cam);
 
   music = *new Music();
 
@@ -86,8 +90,8 @@ void State::AddObject(int mouseX, int mouseY) {
   Sprite *peguinface = new Sprite(*enemy, "./assets/img/penguinface.png");
   enemy->AddComponent(peguinface);
 
-  enemy->box.x = mouseX;
-  enemy->box.y = mouseY;
+  enemy->box.x = mouseX + Camera::pos.x;
+  enemy->box.y = mouseY + Camera::pos.y;
 
   Sound *sound = new Sound(*enemy, "./assets/audio/boom.wav");
   enemy->AddComponent(sound);
