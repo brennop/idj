@@ -32,12 +32,12 @@ void InputManager::Update() {
   updateCounter++;
 
   while (SDL_PollEvent(&event)) {
-
-    /* if (event.key.repeat) */
-    /*   continue; */
+    if (event.key.repeat)
+      continue;
 
     switch (event.type) {
     case SDL_QUIT:
+        printf("Quit requested\n");
       quitRequested = true;
       break;
     case SDL_MOUSEBUTTONDOWN:
@@ -50,20 +50,20 @@ void InputManager::Update() {
       break;
     case SDL_KEYDOWN: {
       int keyCode = event.key.keysym.sym;
-      if (event.key.keysym.sym >= 0x40000000) {
+      if (keyCode >= 0x40000000) {
         keyCode -= 0x3FFFFF80;
       }
       keyState[keyCode] = true;
-      keyState[keyCode] = updateCounter;
+      keyUpdate[keyCode] = updateCounter;
       break;
     }
     case SDL_KEYUP: {
       int keyCode = event.key.keysym.sym;
-      if (event.key.keysym.sym >= 0x40000000) {
+      if (keyCode >= 0x40000000) {
         keyCode -= 0x3FFFFF80;
       }
-      keyState[event.key.keysym.sym] = false;
-      keyState[event.key.keysym.sym] = updateCounter;
+      keyState[keyCode] = false;
+      keyUpdate[keyCode] = updateCounter;
       break;
     }
     }

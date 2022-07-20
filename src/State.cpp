@@ -102,6 +102,7 @@ void State::Input() {
 
 void State::Update(float dt) {
   InputManager &input = InputManager::GetInstance();
+
   if (input.KeyPress(ESCAPE_KEY) || input.QuitRequested())
     quitRequested = true;
 

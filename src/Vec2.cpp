@@ -14,8 +14,7 @@ Vec2::Vec2(float x, float y) {
 Vec2 Vec2::operator+(Vec2 v) { return Vec2(x + v.x, y + v.y); }
 
 Vec2 Vec2::GetRotated(float angle) {
-  float rad = angle * M_PI / 180;
-  float cos = cosf(rad);
-  float sin = sinf(rad);
-  return Vec2(x * cos - y * sin, x * sin + y * cos);
+  float s = sin(angle);
+  float c = cos(angle);
+  return Vec2(x * c - y * s, x * s + y * c);
 }
