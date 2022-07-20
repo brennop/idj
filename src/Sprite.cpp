@@ -41,7 +41,7 @@ void Sprite::SetClip(int x, int y, int w, int h) {
   clipRect.h = h;
 }
 
-void Sprite::Render() { Render(associated.box.x, associated.box.y); }
+void Sprite::Render() { Render(associated.GetBox().x, associated.GetBox().y); }
 
 void Sprite::Render(int x, int y) {
   Game &game = Game::GetInstance();

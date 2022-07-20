@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "Camera.h"
 
 #include <algorithm>
 
@@ -30,6 +31,10 @@ void GameObject::RemoveComponent(Component *component) {
   std::remove_if(
       components.begin(), components.end(),
       [=](std::unique_ptr<Component> &c) { return c.get() == component; });
+}
+
+Rect GameObject::GetBox() {
+  return Rect(box.x - Camera::pos.x, box.y - Camera::pos.y, box.w, box.h);
 }
 
 Component *GameObject::GetComponent(std::string type) {

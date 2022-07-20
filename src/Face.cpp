@@ -16,8 +16,7 @@ void Face::Damage(int damage) {
 void Face::Update(float dt) {
   InputManager &input = InputManager::GetInstance();
   if (input.MousePress(LEFT_MOUSE_BUTTON)) {
-    if (associated.box.Contains((float) input.GetMouseX(), (float) input.GetMouseY())) {
-      printf("clicked\n");
+    if (associated.GetBox().Contains((float) input.GetMouseX(), (float) input.GetMouseY())) {
       Damage(std::rand() % 10 + 10);
     }
   };

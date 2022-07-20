@@ -21,7 +21,9 @@ public:
   void AddComponent(Component *component);
   void RemoveComponent(Component *component);
   Component *GetComponent(std::string type);
+
   Rect box;
+  Rect GetBox();
 
 private:
   bool isDead;
