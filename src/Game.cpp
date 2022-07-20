@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "Resources.h"
 #include "InputManager.h"
+#include "Resources.h"
 #include "common.h"
 
 #include <SDL2/SDL.h>
@@ -34,7 +34,6 @@ Game::Game(std::string &title, int width, int height) {
 
   Mix_AllocateChannels(8);
 
-
   SDL_Window *window = SDL_CreateWindow(title.c_str(), 0, 0, width, height, 0);
 
   CHECK_ERROR(window);
@@ -66,9 +65,14 @@ SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
   while (!state->QuitRequested()) {
+    int newFrameTime = SDL_GetTicks();
+
+    dt = (newFrameTime - frameStart) / 1000.0f;
+    frameStart = newFrameTime;
+
     InputManager::GetInstance().Update();
 
-    state->Update(33);
+    state->Update(dt);
 
     state->Render();
 
@@ -90,3 +94,5 @@ Game &Game::GetInstance() {
 
   return *instance;
 }
+
+float Game::GetDeltaTime() { return dt; }

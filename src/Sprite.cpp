@@ -26,6 +26,9 @@ void Sprite::Open(std::string file) {
 
   int query = SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
 
+  associated.box.w = width;
+  associated.box.h = height;
+
   CHECK_ERROR_INT(query);
 
   SetClip(0, 0, width, height);

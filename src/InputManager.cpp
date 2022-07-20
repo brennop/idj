@@ -31,13 +31,16 @@ void InputManager::Update() {
 
   updateCounter++;
 
+  if(SDL_QuitRequested()) {
+    quitRequested = true;
+  }
+
   while (SDL_PollEvent(&event)) {
     if (event.key.repeat)
       continue;
 
     switch (event.type) {
     case SDL_QUIT:
-        printf("Quit requested\n");
       quitRequested = true;
       break;
     case SDL_MOUSEBUTTONDOWN:

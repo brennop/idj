@@ -16,8 +16,8 @@ void TileSet::RenderTile(int index, float x, float y) {
   }
 
   // calculate the tile's position
-  int row = index / columns;
-  int column = index % columns;
+  int row = index % columns;
+  int column = index / columns;
 
   tileSet.SetClip(row * tileHeight, column * tileWidth, tileWidth, tileHeight);
 

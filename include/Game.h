@@ -9,7 +9,6 @@
 
 #include "State.h"
 
-
 class Game {
 public:
   void Run();
@@ -24,6 +23,10 @@ private:
   SDL_Window *window;
   SDL_Renderer *renderer;
   State *state;
+
+  int frameStart;
+  float dt;
+  float GetDeltaTime();
 };
 
 #endif // __GAME_H
