@@ -18,6 +18,7 @@
 
 State::State() {
   quitRequested = false;
+  started = false;
 
   GameObject *go = new GameObject();
 
@@ -36,8 +37,6 @@ State::State() {
   go->AddComponent(tileMap);
 
   gameObjects.emplace_back(go);
-
-  LoadAssets();
 }
 
 void State::LoadAssets() {
@@ -47,6 +46,17 @@ void State::LoadAssets() {
 
   music.Open("./assets/audio/stageState.ogg");
   music.Play();
+}
+
+void State::Start() {
+  LoadAssets();
+
+  // start all gameObjects
+  for (auto &go : gameObjects) {
+    go->Start();
+  }
+
+  started = true;
 }
 
 void State::Update(float dt) {
@@ -98,6 +108,28 @@ void State::AddObject(int mouseX, int mouseY) {
   enemy->AddComponent(face);
 
   gameObjects.emplace_back(enemy);
+}
+
+std::weak_ptr<GameObject> State::AddObject(GameObject *go) {
+  // create a shared_ptr
+  std::shared_ptr<GameObject> sharedGo = std::shared_ptr<GameObject>(go);
+  gameObjects.emplace_back(sharedGo);
+
+  if (started) {
+    go->Start();
+  }
+
+  return std::weak_ptr<GameObject>(sharedGo);
+}
+
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go) {
+  for (auto &gameObject : gameObjects) {
+    if (gameObject.get() == go) {
+      return std::weak_ptr<GameObject>(gameObject);
+    }
+  }
+  return std::weak_ptr<GameObject>();
 }
 
 bool State::QuitRequested() { return quitRequested; }

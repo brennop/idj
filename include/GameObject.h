@@ -3,8 +3,8 @@
 
 class GameObject;
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include "Component.h"
 #include "Rect.h"
@@ -14,6 +14,7 @@ public:
   GameObject();
   ~GameObject();
 
+  void Start();
   void Update(float dt);
   void Render();
   bool IsDead();
@@ -24,6 +25,8 @@ public:
 
   Rect box;
   Rect GetBox();
+
+  bool started;
 
 private:
   bool isDead;

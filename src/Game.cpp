@@ -64,6 +64,7 @@ State &Game::GetState() { return *state; }
 SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
+  state->Start();
   while (!state->QuitRequested()) {
     int newFrameTime = SDL_GetTicks();
 

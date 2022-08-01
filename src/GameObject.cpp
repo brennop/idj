@@ -3,9 +3,21 @@
 
 #include <algorithm>
 
-GameObject::GameObject() : box(0, 0, 0, 0) { isDead = false; }
+GameObject::GameObject() : box(0, 0, 0, 0) {
+  isDead = false;
+
+  started = false;
+}
 
 GameObject::~GameObject() { components.clear(); }
+
+void GameObject::Start() { 
+  for (auto &c : components) {
+    c->Start();
+  }
+
+  started = true; 
+}
 
 void GameObject::Update(float dt) {
   for (auto &component : components) {
@@ -24,6 +36,9 @@ bool GameObject::IsDead() { return isDead; }
 void GameObject::RequestDelete() { isDead = true; }
 
 void GameObject::AddComponent(Component *component) {
+  if(started) {
+    component->Start();
+  }
   components.emplace_back(component);
 }
 
