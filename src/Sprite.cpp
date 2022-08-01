@@ -29,6 +29,9 @@ void Sprite::Open(std::string file) {
     SDL_DestroyTexture(texture);
   }
 
+  associated.box.w = width;
+  associated.box.h = height;
+
   Game &game = Game::GetInstance();
   auto *renderer = game.GetRenderer();
   texture = IMG_LoadTexture(renderer, file.c_str());

@@ -1,4 +1,5 @@
 #include "Face.h"
+#include "Sound.h"
 
 Face::Face(GameObject &associated) : Component(associated) { hp = 30; }
 
@@ -7,7 +8,8 @@ void Face::Damage(int damage) {
 
   if (hp <= 0) {
     associated.RequestDelete();
-    // TODO: play sound
+    // play sound
+    static_cast<Sound *>(associated.GetComponent("Sound"))->Play(1);
   }
 }
 

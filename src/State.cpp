@@ -7,6 +7,7 @@
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_timer.h>
+#include <cstdio>
 
 #define PI 3.14159265
 
