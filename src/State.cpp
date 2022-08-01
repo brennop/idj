@@ -69,11 +69,9 @@ void State::Update(float dt) {
   }
 
   // Remove all game objects marked for deletion
-  for (auto it = gameObjects.begin(); it != gameObjects.end();) {
-    if ((*it)->IsDead()) {
-      it = gameObjects.erase(it);
-    } else {
-      it++;
+  for (int i = gameObjects.size() - 1; i >= 0; i--) {
+    if (gameObjects[i]->IsDead()) {
+      gameObjects.erase(gameObjects.begin() + i);
     }
   }
 }
