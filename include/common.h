@@ -8,7 +8,7 @@
   }
 
 #define CHECK_ERROR_INT(obj)                                                   \
-  if (obj != 0) {                                                              \
+  if (obj == -1) {                                                              \
     printf("%s\n", SDL_GetError());                                            \
     exit(1);                                                                   \
   }

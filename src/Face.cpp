@@ -10,7 +10,7 @@ void Face::Damage(int damage) {
   if (hp <= 0) {
     associated.RequestDelete();
     // play sound
-    static_cast<Sound *>(associated.GetComponent("Sound"))->Play(1);
+    static_cast<Sound *>(associated.GetComponent("Sound"))->Play();
   }
 }
 
