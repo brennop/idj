@@ -52,6 +52,10 @@ Rect GameObject::GetBox() {
   return Rect(box.x - Camera::pos.x, box.y - Camera::pos.y, box.w, box.h);
 }
 
+Vec2 GameObject::GetPosition() {
+  return Vec2(box.x + box.w / 2, box.y + box.h / 2);
+}
+
 Component *GameObject::GetComponent(std::string type) {
   for (auto &component : components) {
     if (component->Is(type)) {

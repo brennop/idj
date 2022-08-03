@@ -9,7 +9,8 @@
 #define DOWN_ARROW_KEY    0xD1
 #define UP_ARROW_KEY      0xD2
 #define ESCAPE_KEY        SDLK_ESCAPE
-#define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+#define MOUSE1 SDL_BUTTON_LEFT
+#define MOUSE2 SDL_BUTTON_RIGHT
 
 class InputManager {
 public:

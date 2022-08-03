@@ -35,6 +35,8 @@ private:
   Vec2 speed;
   int hp;
 
+  void Move();
+
   std::queue<Action> taskQueue;
   std::vector<std::weak_ptr<GameObject>> minionArray;
 };

@@ -13,10 +13,10 @@ public:
   float operator*(Vec2 v);
 
   Vec2 GetRotated(float angle);
+  Vec2 GetNormalized();
 
   float length();
   float lengthSquared();
-  Vec2 normalize();
   float dot(Vec2 v);
   float cross(Vec2 v);
   float distance(Vec2 v);

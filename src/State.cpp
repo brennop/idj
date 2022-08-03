@@ -8,6 +8,7 @@
 #include "Vec2.h"
 #include "Camera.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -20,6 +21,11 @@ State::State() {
   quitRequested = false;
   started = false;
 
+  music = *new Music();
+
+  /**
+   * resources game object
+   */
   GameObject *go = new GameObject();
 
   Sprite *bg = new Sprite(*go);
@@ -28,15 +34,24 @@ State::State() {
   CameraFollower *cam = new CameraFollower(*go);
   go->AddComponent(cam);
 
-  music = *new Music();
-
-  // map
   TileSet *tileSet = new TileSet(64, 64, "assets/img/tileset.png");
   TileMap *tileMap = new TileMap(*go, "assets/map/tileMap.txt", tileSet);
 
   go->AddComponent(tileMap);
 
   gameObjects.emplace_back(go);
+
+  /**
+   * player game object
+   */
+  GameObject *alienGo = new GameObject();
+  alienGo->box.x = 512 + Camera::pos.x;
+  alienGo->box.y = 100 + Camera::pos.y;
+
+  Alien *alien = new Alien(*alienGo, 3);
+  alienGo->AddComponent(alien);
+
+  gameObjects.emplace_back(alienGo);
 }
 
 void State::LoadAssets() {
