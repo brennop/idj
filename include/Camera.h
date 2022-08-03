@@ -15,6 +15,9 @@ public:
   static Vec2 speed;
 private:
   static GameObject* focus;
+  static Vec2 accel;
+  static Vec2 velocity;
+  static float damping;
 };
 
 #endif // __CAMERA_H
