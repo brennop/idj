@@ -56,6 +56,11 @@ Vec2 GameObject::GetPosition() {
   return Vec2(box.x + box.w / 2, box.y + box.h / 2);
 }
 
+void GameObject::SetPosition(Vec2 position) {
+  box.x = position.x - box.w / 2;
+  box.y = position.y - box.h / 2;
+}
+
 Component *GameObject::GetComponent(std::string type) {
   for (auto &component : components) {
     if (component->Is(type)) {

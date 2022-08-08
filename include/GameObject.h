@@ -26,6 +26,7 @@ public:
   Rect box;
   Rect GetBox();
   Vec2 GetPosition();
+  void SetPosition(Vec2 position);
 
   bool started;
 

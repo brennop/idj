@@ -1,10 +1,11 @@
 #include "Alien.h"
+#include "Game.h"
 #include "InputManager.h"
+#include "Minion.h"
 #include "Sprite.h"
-#include <cstdio>
+#include "State.h"
 
 Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
-
   Sprite *sprite = new Sprite(associated, "./assets/img/alien.png");
   associated.AddComponent(sprite);
 
@@ -16,7 +17,18 @@ Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
 }
 
 void Alien::Start() {
-  // TODO: add minions
+  for (unsigned int i = 0; i < minionArray.size(); i++) {
+    State &state = Game::GetInstance().GetState();
+
+    auto alien = state.GetObjectPtr(&associated);
+    float arcOffsetDeg = i * M_PI * 2 / minionArray.size();
+
+    GameObject *go = new GameObject();
+    Minion *minion = new Minion(*go, alien, arcOffsetDeg);
+    go->AddComponent(minion);
+
+    minionArray[i] = state.AddObject(go);
+  }
 }
 
 Alien::~Alien() {

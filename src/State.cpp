@@ -48,7 +48,7 @@ State::State() {
   alienGo->box.x = 512 + Camera::pos.x;
   alienGo->box.y = 100 + Camera::pos.y;
 
-  Alien *alien = new Alien(*alienGo, 3);
+  Alien *alien = new Alien(*alienGo, 4);
   alienGo->AddComponent(alien);
 
   gameObjects.emplace_back(alienGo);
