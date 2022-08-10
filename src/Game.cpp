@@ -4,6 +4,7 @@
 #include "common.h"
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_hints.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
@@ -43,6 +44,8 @@ Game::Game(std::string &title, int width, int height) {
       // | SDL_RENDERER_ACCELERATED
       // | SDL_RENDERER_PRESENTVSYNC
   );
+
+  SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "2");
 
   CHECK_ERROR(renderer);
 

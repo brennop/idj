@@ -9,6 +9,8 @@ Bullet::Bullet(GameObject &associated, float angle, float speed, int damage,
 
   this->speed = Vec2(speed, 0).GetRotated(angle);
 
+  associated.angleDeg = angle * 180 / M_PI;
+
   Sprite *_sprite = new Sprite(associated, sprite);
   associated.AddComponent(_sprite);
 }

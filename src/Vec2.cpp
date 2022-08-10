@@ -30,5 +30,13 @@ float Vec2::length() { return sqrt(x * x + y * y); }
 
 float Vec2::angle() { return atan2(y, x); }
 
+float Vec2::distance(Vec2 v) {
+  return sqrt((x - v.x) * (x - v.x) + (y - v.y) * (y - v.y));
+}
+
+float Vec2::distanceSquared(Vec2 v) {
+  return (x - v.x) * (x - v.x) + (y - v.y) * (y - v.y);
+}
+
 
 

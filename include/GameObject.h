@@ -30,6 +30,7 @@ public:
 
   bool started;
 
+  double angleDeg;
 private:
   bool isDead;
   std::vector<std::unique_ptr<Component>> components;

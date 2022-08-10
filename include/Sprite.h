@@ -26,6 +26,9 @@ public:
   void Update(float dt) override;
   bool Is(std::string type) override;
 
+  void SetScale(Vec2 scale);
+  Vec2 GetScale();
+
   /*
    * Retorna true se texture estiver alocada
    */
@@ -36,6 +39,7 @@ private:
   int width;
   int height;
   SDL_Rect clipRect;
+  Vec2 scale;
 };
 
 #endif // __SPRITE_H

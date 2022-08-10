@@ -38,6 +38,8 @@ Alien::~Alien() {
 }
 
 void Alien::Update(float dt) {
+  associated.angleDeg += dt * 180 / M_PI * -1;
+
   InputManager &input = InputManager::GetInstance();
 
   if (hp <= 0) {
@@ -70,8 +72,15 @@ void Alien::Update(float dt) {
       break;
     }
     case Action::SHOOT: {
-      // get random minion
-      auto minion = minionArray[rand() % minionArray.size()].lock();
+      // get closest minion
+      auto minion = minionArray[0].lock();
+      for (unsigned int i = 1; i < minionArray.size(); i++) {
+        auto minion2 = minionArray[i].lock();
+        if (minion2->GetPosition().distanceSquared(action.pos) <
+            minion->GetPosition().distanceSquared(action.pos)) {
+          minion = minion2;
+        }
+      }
       if (minion) {
         static_cast<Minion *>(minion->GetComponent("Minion"))->Shoot(action.pos);
       }

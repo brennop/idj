@@ -11,11 +11,13 @@
 
 Sprite::Sprite(GameObject &associated) : Component(associated) {
   texture = nullptr;
+  scale = Vec2(1.0, 1.0);
 }
 
 Sprite::Sprite(GameObject &associated, std::string file)
     : Component(associated) {
   texture = nullptr;
+  scale = Vec2(1.0, 1.0);
   Open(file);
 }
 
@@ -50,18 +52,23 @@ void Sprite::Render(int x, int y) {
   SDL_Rect dstrect;
   dstrect.x = x;
   dstrect.y = y;
-  dstrect.w = clipRect.w;
-  dstrect.h = clipRect.h;
+  dstrect.w = clipRect.w * scale.x;
+  dstrect.h = clipRect.h * scale.y;
 
-  int render = SDL_RenderCopy(renderer, texture, &clipRect, &dstrect);
+  int render = SDL_RenderCopyEx(renderer, texture, &clipRect, &dstrect,
+                                associated.angleDeg, nullptr,
+                                SDL_FLIP_NONE);
   CHECK_ERROR_INT(render);
 }
 
 void Sprite::Update(float dt) {}
 bool Sprite::Is(std::string type) { return type == "Sprite"; }
 
-int Sprite::GetWidth() { return width; }
+int Sprite::GetWidth() { return width * scale.x; }
 
-int Sprite::GetHeight() { return height; }
+int Sprite::GetHeight() { return height * scale.y; }
+
+void Sprite::SetScale(Vec2 scale) { this->scale = scale; }
+Vec2 Sprite::GetScale() { return scale; }
 
 bool Sprite::IsOpen() { return texture != nullptr; }
