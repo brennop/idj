@@ -28,5 +28,7 @@ Vec2 Vec2::GetNormalized() {
 
 float Vec2::length() { return sqrt(x * x + y * y); }
 
-float Vec2::lengthSquared() { return x * x + y * y; }
+float Vec2::angle() { return atan2(y, x); }
+
+
 

@@ -1,8 +1,8 @@
 #include "InputManager.h"
+#include "Camera.h"
 
 #include "SDL2/SDL_events.h"
 #include <SDL2/SDL_mouse.h>
-#include <cstdio>
 
 InputManager &InputManager::GetInstance() {
   static InputManager inputManager;
@@ -75,6 +75,11 @@ void InputManager::Update() {
 
 int InputManager::GetMouseX() { return GetInstance().mouseX; }
 int InputManager::GetMouseY() { return GetInstance().mouseY; }
+
+Vec2 InputManager::GetMousePos() {
+  return Vec2(mouseX, mouseY) + Camera::pos;
+}
+
 bool InputManager::QuitRequested() { return GetInstance().quitRequested; }
 
 bool InputManager::KeyPress(int key) {

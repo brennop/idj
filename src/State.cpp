@@ -89,8 +89,8 @@ void State::Update(float dt) {
   Camera::Update(dt);
 
   // Update all game objects
-  for (auto &gameObject : gameObjects) {
-    gameObject->Update(dt);
+  for (unsigned i = 0; i < gameObjects.size(); i++) {
+    gameObjects[i]->Update(dt);
   }
 
   // Remove all game objects marked for deletion

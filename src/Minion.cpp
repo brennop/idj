@@ -1,5 +1,9 @@
 #include "Minion.h"
 #include "Sprite.h"
+#include "Bullet.h"
+#include "State.h"
+#include "Game.h"
+#include "Camera.h"
 
 Minion::Minion(GameObject &associated, std::weak_ptr<GameObject> alienCenter,
                float arcOffset)
@@ -22,3 +26,14 @@ void Minion::Update(float dt) {
 void Minion::Render() {}
 
 bool Minion::Is(std::string type) { return type == "Minion"; }
+
+void Minion::Shoot(Vec2 target) {
+  GameObject *bullet = new GameObject();
+
+  float angle = (target - associated.GetPosition()).angle();
+
+  bullet->AddComponent(new Bullet(*bullet, angle, 500, 1, 1000, "./assets/img/minionbullet1.png"));
+  bullet->SetPosition(associated.GetPosition());
+
+  Game::GetInstance().GetState().AddObject(bullet);
+}

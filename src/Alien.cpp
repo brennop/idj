@@ -45,16 +45,12 @@ void Alien::Update(float dt) {
   }
 
   if (input.MousePress(MOUSE1)) {
-    Vec2 objPos = Vec2(input.GetMouseX(), input.GetMouseY());
-    // TODO: calculate pos
-    // TODO: take camera into account
+    Vec2 objPos = input.GetMousePos();
     AddAction(Action::SHOOT, objPos.x, objPos.y);
   }
 
   if (input.MousePress(MOUSE2)) {
-    Vec2 objPos = Vec2(input.GetMouseX(), input.GetMouseY());
-    // TODO: take camera into account
-    // TODO: calculate pos
+    Vec2 objPos = input.GetMousePos();
     AddAction(Action::MOVE, objPos.x, objPos.y);
   }
 
@@ -73,10 +69,15 @@ void Alien::Update(float dt) {
 
       break;
     }
-    case Action::SHOOT:
-      // TODO: shoot
+    case Action::SHOOT: {
+      // get random minion
+      auto minion = minionArray[rand() % minionArray.size()].lock();
+      if (minion) {
+        static_cast<Minion *>(minion->GetComponent("Minion"))->Shoot(action.pos);
+      }
       taskQueue.pop();
       break;
+      }
     default:
       taskQueue.pop();
       break;

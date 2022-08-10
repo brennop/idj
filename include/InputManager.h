@@ -1,6 +1,8 @@
 #ifndef __INPUT_MANAGER_H
 #define __INPUT_MANAGER_H
 
+#include "Vec2.h"
+
 #define INCLUDE_SDL
 #include "SDL_include.h"
 
@@ -25,6 +27,7 @@ public:
 
   int GetMouseX();
   int GetMouseY();
+  Vec2 GetMousePos();
 
   bool QuitRequested();
 

@@ -14,14 +14,13 @@ public:
 
   Vec2 GetRotated(float angle);
   Vec2 GetNormalized();
+  float angle();
 
   float length();
-  float lengthSquared();
   float dot(Vec2 v);
   float cross(Vec2 v);
   float distance(Vec2 v);
   float distanceSquared(Vec2 v);
-  float angle(Vec2 v);
 };
 
 #endif // _VEC2_H_
