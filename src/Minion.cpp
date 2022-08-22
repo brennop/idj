@@ -40,7 +40,7 @@ void Minion::Shoot(Vec2 target) {
 
   float angle = (target - associated.GetPosition()).angle();
 
-  bullet->AddComponent(new Bullet(*bullet, angle, 500, 1, 1000, "./assets/img/minionbullet1.png"));
+  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/minionbullet2.png"));
   bullet->SetPosition(associated.GetPosition());
 
   Game::GetInstance().GetState().AddObject(bullet);
