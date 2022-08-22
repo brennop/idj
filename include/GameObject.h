@@ -33,6 +33,7 @@ public:
   double angleDeg;
 private:
   bool isDead;
+  int depth;
   std::vector<std::unique_ptr<Component>> components;
 };
 

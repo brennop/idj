@@ -43,6 +43,11 @@ void Sprite::SetClip(int x, int y, int w, int h) {
   clipRect.h = h;
 }
 
+void Sprite::Render(int x, int y, int z) {
+  Game &game = Game::GetInstance();
+  game.GetState().enqueueRender(z, &associated);
+}
+
 void Sprite::Render() { Render(associated.GetBox().x, associated.GetBox().y); }
 
 void Sprite::Render(int x, int y) {
@@ -60,6 +65,7 @@ void Sprite::Render(int x, int y) {
                                 SDL_FLIP_NONE);
   CHECK_ERROR_INT(render);
 }
+
 
 void Sprite::Update(float dt) {}
 bool Sprite::Is(std::string type) { return type == "Sprite"; }

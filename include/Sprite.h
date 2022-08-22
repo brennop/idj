@@ -23,6 +23,7 @@ public:
 
   void Render() override;
   void Render(int x, int y);
+  void Render(int x, int y, int z);
   void Update(float dt) override;
   bool Is(std::string type) override;
 

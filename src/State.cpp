@@ -147,6 +147,10 @@ std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go) {
   return std::weak_ptr<GameObject>();
 }
 
+void State::enqueueRender(int z, GameObject *go) {
+  renderQueue.push(std::make_pair(z, GetObjectPtr(go)));
+}
+
 bool State::QuitRequested() { return quitRequested; }
 
 State::~State() { gameObjects.clear(); }
