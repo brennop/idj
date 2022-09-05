@@ -14,7 +14,9 @@ void Camera::Unfollow() { focus = nullptr; }
 
 void Camera::Update(float dt) {
   if (focus) {
-    /* pos = focus->pos + focus->size / 2; */
+    Vec2 center = focus->GetPosition();
+    Vec2 distance = center - pos - Vec2(512, 300);
+    velocity = distance * 15;
   } else {
     InputManager &input = InputManager::GetInstance();
 

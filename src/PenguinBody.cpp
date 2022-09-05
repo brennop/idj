@@ -1,8 +1,8 @@
 #include "PenguinBody.h"
 #include "Game.h"
+#include "InputManager.h"
 #include "PenguinCannon.h"
 #include "Sprite.h"
-#include "InputManager.h"
 #include <cmath>
 
 PenguinBody *PenguinBody::player = nullptr;
@@ -45,10 +45,10 @@ void PenguinBody::Update(float dt) {
     angle += 4 * dt;
   }
   if (input.IsKeyDown(SDLK_w)) {
-    linearSpeed += 20;
+    linearSpeed += 10;
   }
   if (input.IsKeyDown(SDLK_s)) {
-    linearSpeed -= 20;
+    linearSpeed -= 10;
   }
 
   speed = Vec2(linearSpeed, linearSpeed).GetRotated(angle - M_PI / 4);
@@ -65,4 +65,4 @@ void PenguinBody::Update(float dt) {
 void PenguinBody::Render() {}
 bool PenguinBody::Is(std::string type) { return type == "PenguinBody"; }
 
-
+Vec2 PenguinBody::GetCenter() { return associated.GetPosition(); }

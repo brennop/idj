@@ -17,6 +17,8 @@ public:
   void Render() override;
   bool Is(std::string type) override;
 
+  Vec2 GetCenter();
+
   static PenguinBody *player;
 
 private:

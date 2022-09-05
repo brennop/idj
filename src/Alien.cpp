@@ -46,11 +46,6 @@ void Alien::Update(float dt) {
     associated.RequestDelete();
   }
 
-  if (input.MousePress(MOUSE1)) {
-    Vec2 objPos = input.GetMousePos();
-    AddAction(Action::SHOOT, objPos.x, objPos.y);
-  }
-
   if (input.MousePress(MOUSE2)) {
     Vec2 objPos = input.GetMousePos();
     AddAction(Action::MOVE, objPos.x, objPos.y);

@@ -50,6 +50,8 @@ State::State() {
   playerGo->box.x = 704;
   playerGo->box.y = 640;
 
+  Camera::Follow(playerGo);
+
   PenguinBody *player = new PenguinBody(*playerGo);
   playerGo->AddComponent(player);
 
