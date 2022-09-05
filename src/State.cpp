@@ -9,6 +9,8 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 #include "Alien.h"
+#include "PenguinBody.h"
+#include "PenguinCannon.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -44,6 +46,15 @@ State::State() {
   /**
    * player game object
    */
+  GameObject *playerGo = new GameObject();
+  playerGo->box.x = 704;
+  playerGo->box.y = 640;
+
+  PenguinBody *player = new PenguinBody(*playerGo);
+  playerGo->AddComponent(player);
+
+  gameObjects.emplace_back(playerGo);
+
   GameObject *alienGo = new GameObject();
   alienGo->box.x = 512 + Camera::pos.x;
   alienGo->box.y = 100 + Camera::pos.y;
