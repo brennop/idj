@@ -6,6 +6,8 @@
 #include "Game.h"
 #include "Collider.h"
 
+#define COOLDOWN 0.8f
+
 PenguinCannon::PenguinCannon(GameObject &associated) : Component(associated) {
   Sprite *sprite = new Sprite(associated, "assets/img/cubngun.png");
   associated.AddComponent(sprite);
@@ -19,6 +21,8 @@ void PenguinCannon::Update(float dt) {
     associated.RequestDelete();
     return;
   }
+
+  shootCooldown.Update(dt);
 
   Vec2 bodyPos = PenguinBody::player->GetCenter();
   associated.box.x = bodyPos.x - associated.box.w / 2;
@@ -37,6 +41,12 @@ void PenguinCannon::Render() {}
 bool PenguinCannon::Is(std::string type) { return type == "PenguinCannon"; }
 
 void PenguinCannon::Shoot() {
+  if (shootCooldown.Get() < COOLDOWN) {
+    return;
+  }
+
+  shootCooldown.Restart();
+
   GameObject *bullet = new GameObject();
 
   bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/penguinbullet.png", false));
