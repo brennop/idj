@@ -1,9 +1,11 @@
 #include "PenguinBody.h"
+#include "Bullet.h"
+#include "Camera.h"
+#include "Collider.h"
 #include "Game.h"
 #include "InputManager.h"
 #include "PenguinCannon.h"
 #include "Sprite.h"
-#include <cmath>
 
 PenguinBody *PenguinBody::player = nullptr;
 
@@ -15,6 +17,9 @@ PenguinBody::PenguinBody(GameObject &associated) : Component(associated) {
 
   Sprite *sprite = new Sprite(associated, "assets/img/penguin.png");
   associated.AddComponent(sprite);
+
+  Collider *collider = new Collider(associated);
+  associated.AddComponent(collider);
 
   PenguinBody::player = this;
 }
@@ -31,6 +36,7 @@ void PenguinBody::Start() {
 
 void PenguinBody::Update(float dt) {
   if (hp <= 0) {
+    Camera::Unfollow();
     associated.RequestDelete();
     penguinCannon.lock()->RequestDelete();
     return;
@@ -64,5 +70,14 @@ void PenguinBody::Update(float dt) {
 
 void PenguinBody::Render() {}
 bool PenguinBody::Is(std::string type) { return type == "PenguinBody"; }
+
+void PenguinBody::NotifyCollision(GameObject &other) {
+  if (other.GetComponent("Bullet") != nullptr) {
+    Bullet *bullet = (Bullet *)other.GetComponent("Bullet");
+    if (bullet->targetsPlayer) {
+      hp -= 10;
+    }
+  }
+}
 
 Vec2 PenguinBody::GetCenter() { return associated.GetPosition(); }

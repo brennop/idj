@@ -4,10 +4,14 @@
 #include "Minion.h"
 #include "Sprite.h"
 #include "State.h"
+#include "Collider.h"
 
 Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
   Sprite *sprite = new Sprite(associated, "./assets/img/alien.png");
   associated.AddComponent(sprite);
+
+  Collider *collider = new Collider(associated);
+  associated.AddComponent(collider);
 
   speed = Vec2(1.0, 1.0);
   hp = 30;

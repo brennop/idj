@@ -34,6 +34,12 @@ void GameObject::Render() {
 
 bool GameObject::IsDead() { return isDead; }
 
+void GameObject::NotifyCollision(GameObject &other) {
+  for (auto &component : components) {
+    component->NotifyCollision(other);
+  }
+}
+
 void GameObject::RequestDelete() { isDead = true; }
 
 void GameObject::AddComponent(Component *component) {

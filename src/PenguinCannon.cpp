@@ -4,10 +4,14 @@
 #include "Sprite.h"
 #include "Bullet.h"
 #include "Game.h"
+#include "Collider.h"
 
 PenguinCannon::PenguinCannon(GameObject &associated) : Component(associated) {
   Sprite *sprite = new Sprite(associated, "assets/img/cubngun.png");
   associated.AddComponent(sprite);
+
+  Collider *collider = new Collider(associated);
+  associated.AddComponent(collider);
 }
 
 void PenguinCannon::Update(float dt) {
@@ -35,7 +39,7 @@ bool PenguinCannon::Is(std::string type) { return type == "PenguinCannon"; }
 void PenguinCannon::Shoot() {
   GameObject *bullet = new GameObject();
 
-  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/penguinbullet.png"));
+  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/penguinbullet.png", false));
   bullet->SetPosition(associated.GetPosition());
 
   Game::GetInstance().GetState().AddObject(bullet);

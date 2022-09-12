@@ -4,6 +4,7 @@
 #include "State.h"
 #include "Game.h"
 #include "Camera.h"
+#include "Collider.h"
 
 static float randomRange(float min, float max) {
   return min + (max - min) * ((float) rand()) / (float) RAND_MAX;
@@ -15,6 +16,10 @@ Minion::Minion(GameObject &associated, std::weak_ptr<GameObject> alienCenter,
 
   Sprite *sprite = new Sprite(associated, "./assets/img/minion.png");
   associated.AddComponent(sprite);
+
+  Collider *collider = new Collider(associated);
+  associated.AddComponent(collider);
+
   float scale = randomRange(0.5, 1.0);
   sprite->SetScale(Vec2(scale, scale));
 }
@@ -40,7 +45,7 @@ void Minion::Shoot(Vec2 target) {
 
   float angle = (target - associated.GetPosition()).angle();
 
-  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/minionbullet2.png"));
+  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/minionbullet2.png", true));
   bullet->SetPosition(associated.GetPosition());
 
   Game::GetInstance().GetState().AddObject(bullet);

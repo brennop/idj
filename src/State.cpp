@@ -1,16 +1,18 @@
 #include "State.h"
+#include "Alien.h"
+#include "Camera.h"
+#include "CameraFollower.h"
+#include "Collider.h"
+#include "Collision.h"
 #include "Face.h"
 #include "Game.h"
 #include "InputManager.h"
+#include "PenguinBody.h"
+#include "PenguinCannon.h"
 #include "Sound.h"
 #include "TileMap.h"
 #include "TileSet.h"
 #include "Vec2.h"
-#include "Camera.h"
-#include "CameraFollower.h"
-#include "Alien.h"
-#include "PenguinBody.h"
-#include "PenguinCannon.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -106,6 +108,24 @@ void State::Update(float dt) {
     gameObjects[i]->Update(dt);
   }
 
+  // check collisions
+  for (unsigned i = 0; i < gameObjects.size(); i++) {
+    for (unsigned j = i + 1; j < gameObjects.size(); j++) {
+      Collider *collider1 =
+          static_cast<Collider *>(gameObjects[i]->GetComponent("Collider"));
+      Collider *collider2 =
+          static_cast<Collider *>(gameObjects[j]->GetComponent("Collider"));
+
+      if (collider1 && collider2) {
+        if (Collision::IsColliding(collider1->box, collider2->box,
+                                   gameObjects[i]->angleDeg, gameObjects[j]->angleDeg)) {
+          gameObjects[i]->NotifyCollision(*gameObjects[j]);
+          gameObjects[j]->NotifyCollision(*gameObjects[i]);
+        }
+      }
+    }
+  }
+
   // Remove all game objects marked for deletion
   for (int i = gameObjects.size() - 1; i >= 0; i--) {
     if (gameObjects[i]->IsDead()) {
@@ -149,7 +169,6 @@ std::weak_ptr<GameObject> State::AddObject(GameObject *go) {
 
   return std::weak_ptr<GameObject>(sharedGo);
 }
-
 
 std::weak_ptr<GameObject> State::GetObjectPtr(GameObject *go) {
   for (auto &gameObject : gameObjects) {
