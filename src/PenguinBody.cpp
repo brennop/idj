@@ -39,6 +39,14 @@ void PenguinBody::Update(float dt) {
     Camera::Unfollow();
     associated.RequestDelete();
     penguinCannon.lock()->RequestDelete();
+
+    GameObject *go = new GameObject();
+    go->box.x = associated.box.x;
+    go->box.y = associated.box.y;
+    go->AddComponent(new Sprite(*go, "assets/img/penguindeath.png"));
+
+    Game::GetInstance().GetState().AddObject(go);
+
     return;
   }
 
@@ -75,7 +83,7 @@ void PenguinBody::NotifyCollision(GameObject &other) {
   if (other.GetComponent("Bullet") != nullptr) {
     Bullet *bullet = (Bullet *)other.GetComponent("Bullet");
     if (bullet->targetsPlayer) {
-      hp -= 10;
+      hp -= bullet->GetDamage();
     }
   }
 }

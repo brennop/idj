@@ -28,18 +28,21 @@ Sprite::Sprite(GameObject &associated, std::string file)
   timeElapsed = 0;
   currentFrame = 1;
   frameTime = 0;
+  timeToLive = 0;
 
   Open(file);
 }
 
 Sprite::Sprite(GameObject &associated, std::string file, int frameCount,
-               float frameTime)
+               float frameTime, float timeToLive)
     : Component(associated), frameCount(frameCount), frameTime(frameTime) {
   texture = nullptr;
   scale = Vec2(1.0, 1.0);
 
   timeElapsed = 0;
   currentFrame = 0;
+
+  this->timeToLive = timeToLive;
 
   Open(file);
 }
@@ -91,6 +94,13 @@ void Sprite::Update(float dt) {
 
   if (nextFrame != currentFrame)
     SetFrame(nextFrame);
+
+  if(timeToLive > 0) {
+    if(timeToLiveTimer.Get() > timeToLive) {
+      associated.RequestDelete();
+    }
+    timeToLiveTimer.Update(dt);
+  }
 }
 
 bool Sprite::Is(std::string type) { return type == "Sprite"; }

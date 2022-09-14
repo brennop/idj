@@ -6,7 +6,7 @@
 #include "Game.h"
 #include "Collider.h"
 
-#define COOLDOWN 0.8f
+#define COOLDOWN 0.4f
 
 PenguinCannon::PenguinCannon(GameObject &associated) : Component(associated) {
   Sprite *sprite = new Sprite(associated, "assets/img/cubngun.png");
@@ -49,7 +49,7 @@ void PenguinCannon::Shoot() {
 
   GameObject *bullet = new GameObject();
 
-  bullet->AddComponent(new Bullet(*bullet, angle, 300, 1, 1000, "./assets/img/penguinbullet.png", false));
+  bullet->AddComponent(new Bullet(*bullet, angle, 300, 5, 1000, "./assets/img/penguinbullet.png", false));
   bullet->SetPosition(associated.GetPosition());
 
   Game::GetInstance().GetState().AddObject(bullet);

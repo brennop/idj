@@ -14,7 +14,7 @@ Bullet::Bullet(GameObject &associated, float angle, float speed, int damage,
 
   associated.angleDeg = angle * 180 / M_PI;
 
-  Sprite *_sprite = new Sprite(associated, sprite, 3, 0.16);
+  Sprite *_sprite = new Sprite(associated, sprite, 3, 0.16, 0);
   associated.AddComponent(_sprite);
 
   Collider *collider = new Collider(associated);

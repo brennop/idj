@@ -6,6 +6,7 @@
 #include "SDL_include.h"
 
 #include "Component.h"
+#include "Timer.h"
 
 #include <string>
 
@@ -14,7 +15,7 @@ public:
   Sprite(GameObject &associated);
   Sprite(GameObject &associated, std::string file);
   Sprite(GameObject &associated, std::string file, int frameCount,
-         float frameTime);
+         float frameTime, float timeToLive = 0);
   ~Sprite();
 
   void Open(std::string file);
@@ -51,6 +52,9 @@ private:
   int currentFrame;
   float timeElapsed;
   float frameTime;
+
+  float timeToLive;
+  Timer timeToLiveTimer;
 };
 
 #endif // __SPRITE_H
