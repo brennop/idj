@@ -7,15 +7,19 @@
 
 #include "Component.h"
 #include "Vec2.h"
+#include "Timer.h"
 
 class Alien : public Component {
 public:
   Alien(GameObject &associated, int nMinions);
   ~Alien();
-  void Start();
-  void Update(float dt);
-  void Render();
-  bool Is(std::string type);
+  void Start() override;
+  void Update(float dt) override;
+  void Render() override;
+  bool Is(std::string type) override;
+  void NotifyCollision(GameObject &other) override;
+
+  static int alienCount;
 private:
   class Action {
   public:
@@ -29,8 +33,20 @@ private:
     ActionType type;
     Vec2 pos;
   };
-
   void AddAction(Action::ActionType type, float x, float y);
+
+  enum AlienState {
+    MOVING,
+    ATTACKING,
+  };
+
+  AlienState state;
+  Timer stateTimer;
+  Timer shootCooldown;
+
+  float fireRate;
+  float fireAngle;
+  int attackType;
 
   Vec2 speed;
   int hp;
