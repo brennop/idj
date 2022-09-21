@@ -69,7 +69,10 @@ StageState::StageState() : State() {
   objectArray.emplace_back(alienGo);
 }
 
-StageState::~StageState() {}
+StageState::~StageState() {
+  Camera::Unfollow();
+  Camera::pos = {0, 0};
+}
 
 void StageState::LoadAssets() {
   GameObject *go = static_cast<GameObject *>(objectArray[0].get());
@@ -89,8 +92,11 @@ void StageState::Start() {
 void StageState::Update(float dt) {
   InputManager &input = InputManager::GetInstance();
 
-  if (input.KeyPress(ESCAPE_KEY) || input.QuitRequested())
+  if (input.QuitRequested())
     quitRequested = true;
+
+  if (input.KeyPress(ESCAPE_KEY))
+    popRequested = true;
 
   Camera::Update(dt);
 

@@ -7,6 +7,7 @@
 #include <SDL2/SDL_hints.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_timer.h>
@@ -32,6 +33,8 @@ Game::Game(std::string &title, int width, int height) {
   Mix_Init(MIX_INIT_OGG);
   Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS,
                 1024);
+
+  CHECK_ERROR_INT(TTF_Init());
 
   Mix_AllocateChannels(8);
 
@@ -60,6 +63,7 @@ Game::~Game() {
   Mix_CloseAudio();
   Mix_Quit();
   IMG_Quit();
+  TTF_Quit();
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
