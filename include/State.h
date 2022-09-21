@@ -1,37 +1,32 @@
 #ifndef __STATE_H
 #define __STATE_H
 
-#include <memory>
-#include <string>
-#include <vector>
-
 #include "GameObject.h"
-#include "Music.h"
-#include "Sprite.h"
 
 class State {
 public:
   State();
-  ~State();
+  virtual ~State() = 0;
+  virtual void LoadAssets() = 0;
+  virtual void Update(float dt) = 0;
+  virtual void Render() = 0;
+  virtual void Start() = 0;
+  virtual void Pause() = 0;
+  virtual void Resume() = 0;
+  virtual std::weak_ptr<GameObject> AddObject(GameObject *object);
+  virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject *object);
+  bool PopRequested();
   bool QuitRequested();
-  void LoadAssets();
 
-  void Start();
-  void Update(float dt);
-  void Render();
+protected:
+  void StartArray();
+  void UpdateArray(float dt);
+  void RenderArray();
 
-  std::weak_ptr<GameObject> AddObject(GameObject* go);
-  std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
-private:
-  void Input();
-  void AddObject(int mouseX, int mouseY);
-
-  Music music;
+  bool popRequested;
   bool quitRequested;
-
   bool started;
-
-  std::vector<std::shared_ptr<GameObject>> gameObjects;
+  std::vector<std::shared_ptr<GameObject>> objectArray;
 };
 
 #endif // __STATE_H

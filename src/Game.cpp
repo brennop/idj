@@ -49,11 +49,14 @@ Game::Game(std::string &title, int width, int height) {
 
   CHECK_ERROR(renderer);
 
-  state = new State();
+  storedState = nullptr;
 }
 
 Game::~Game() {
-  // TODO: delete state?
+  if (storedState != nullptr) {
+    delete storedState;
+  }
+
   Mix_CloseAudio();
   Mix_Quit();
   IMG_Quit();
@@ -62,13 +65,43 @@ Game::~Game() {
   SDL_Quit();
 }
 
-State &Game::GetState() { return *state; }
+State &Game::GetState() { return *stateStack.top(); }
+
+void Game::Push(State *state) {
+  if (instance->storedState != nullptr) {
+    delete instance->storedState;
+  }
+
+  instance->storedState = state;
+}
 
 SDL_Renderer *Game::GetRenderer() { return renderer; }
 
 void Game::Run() {
-  state->Start();
-  while (!state->QuitRequested()) {
+  if (storedState != nullptr) {
+    stateStack.emplace(storedState);
+    storedState = nullptr;
+    stateStack.top()->Start();
+  }
+
+  while (!stateStack.empty() && !stateStack.top()->QuitRequested()) {
+    // check if there is a state to be popped
+    if (stateStack.top()->PopRequested()) {
+      stateStack.pop();
+      if (stateStack.empty()) {
+        break;
+      }
+      stateStack.top()->Resume();
+    }
+
+    // check if there is a state to be pushed
+    if (storedState != nullptr) {
+      stateStack.top()->Pause();
+      stateStack.emplace(storedState);
+      storedState = nullptr;
+      stateStack.top()->Start();
+    }
+
     int newFrameTime = SDL_GetTicks();
 
     dt = (newFrameTime - frameStart) / 1000.0f;
@@ -76,9 +109,9 @@ void Game::Run() {
 
     InputManager::GetInstance().Update();
 
-    state->Update(dt);
+    stateStack.top()->Update(dt);
 
-    state->Render();
+    stateStack.top()->Render();
 
     SDL_RenderPresent(renderer);
   };
