@@ -13,6 +13,7 @@
 #include "TileMap.h"
 #include "TileSet.h"
 #include "Vec2.h"
+#include "EndState.h"
 
 #include <SDL2/SDL_quit.h>
 #include <SDL2/SDL_render.h>
@@ -119,6 +120,20 @@ void StageState::Update(float dt) {
         }
       }
     }
+  }
+
+  // check if player is dead
+  if (objectArray[1]->IsDead()) {
+    popRequested = true;
+    Game::GetInstance().playerVictory = false;
+    Game::GetInstance().Push(new EndState());
+  }
+
+  // check if alien is dead
+  if (objectArray[2]->IsDead()) {
+    popRequested = true;
+    Game::GetInstance().playerVictory = true;
+    Game::GetInstance().Push(new EndState());
   }
 
   // Remove all game objects marked for deletion

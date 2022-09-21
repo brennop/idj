@@ -71,6 +71,20 @@ void PenguinBody::Update(float dt) {
   associated.box.x += speed.x * dt;
   associated.box.y += speed.y * dt;
 
+  // wrap around
+  if (associated.box.x > 1408) {
+    associated.box.x = 0;
+  }
+  if (associated.box.x < 0) {
+    associated.box.x = 1408;
+  }
+  if (associated.box.y > 1280) {
+    associated.box.y = 0;
+  }
+  if (associated.box.y < 0) {
+    associated.box.y = 1280;
+  }
+
   linearSpeed *= pow(0.99, dt * std::abs(linearSpeed));
 
   // TODO: set penguinCannon position and angle

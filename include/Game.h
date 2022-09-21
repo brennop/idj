@@ -21,6 +21,8 @@ public:
 
   void Push(State *state);
 
+  bool playerVictory = false;
+
 private:
   Game(std::string &title, int width, int height);
   static Game *instance;

@@ -72,10 +72,6 @@ Game::~Game() {
 State &Game::GetState() { return *(stateStack.top().get()); }
 
 void Game::Push(State *state) {
-  if (instance->storedState != nullptr) {
-    delete instance->storedState;
-  }
-
   instance->storedState = state;
 }
 
