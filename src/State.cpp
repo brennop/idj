@@ -44,19 +44,20 @@ bool State::PopRequested() { return popRequested; }
 bool State::QuitRequested() { return quitRequested; }
 
 void State::StartArray() {
-  if (!started) {
-    started = true;
+  for (auto &it : objectArray) {
+    it->Start();
   }
+  started = true;
 }
 
 void State::UpdateArray(float dt) {
-  for (auto &it : objectArray) {
-    it->Update(dt);
+  for (unsigned int i = 0; i < objectArray.size(); i++) {
+    objectArray[i]->Update(dt);
   }
 }
 
 void State::RenderArray() {
-  for (auto &it : objectArray) {
-    it->Render();
+  for (unsigned int i = 0; i < objectArray.size(); i++) {
+    objectArray[i]->Render();
   }
 }

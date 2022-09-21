@@ -7,6 +7,7 @@
 #include "PenguinBody.h"
 #include "Sprite.h"
 #include "State.h"
+#include "Vec2.h"
 
 #define DISTANCE_TO_MOVE 300
 #define ALIEN_COOLDOWN 5.0f

@@ -69,7 +69,7 @@ Game::~Game() {
   SDL_Quit();
 }
 
-State &Game::GetState() { return *stateStack.top(); }
+State &Game::GetState() { return *(stateStack.top().get()); }
 
 void Game::Push(State *state) {
   if (instance->storedState != nullptr) {
